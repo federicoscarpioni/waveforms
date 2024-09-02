@@ -5,11 +5,19 @@ from scipy.fft import fft,fftshift,fftfreq
 from scipy.interpolate import CubicSpline
 import os
 import json
+from galvani import BioLogic
+import pandas as pd
 
 
 # Auxiliary functions
 def compute_crest_factor(signal):
     return max(abs(signal)) / np.sqrt(np.mean(signal**2)) 
+
+
+def load_eclab_impedance(file_name):
+    mpr_file = BioLogic.MPRfile(file_name)
+    df = pd.DataFrame(mpr_file.data)
+    return df
 
 def amplitude_extraction_from_experiment(impedance_experiment, 
                                          frequencies_experiment, 
